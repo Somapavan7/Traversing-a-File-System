@@ -35,14 +35,10 @@ def hashfile(path, blocksize = 65536):
 def printResults(dict1):
     results = list(filter(lambda x: len(x) > 1, dict1.values()))
     if len(results) > 0:
-        print('Duplicates Found:')
-        print('The following files are identical. The name could differ, but the content is identical')
-        print('___________________')
         for result in results:
             for subresult in result:
                 print('\t\t%s' % subresult)
-            print('___________________')
- 
+            print('*******************')
     else:
         print('No duplicate files found.')
  
@@ -52,9 +48,7 @@ if __name__ == '__main__':
         dups = {}
         folders = sys.argv[1:]
         for i in folders:
-            # Iterate the folders given
             if os.path.exists(i):
-                # Find the duplicated files and append them to the dups
                 joinDicts(dups, findDup(i))
             else:
                 print('%s is not a valid path, please verify' % i)
