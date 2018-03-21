@@ -1,0 +1,28 @@
+import hashlib
+import os
+
+def hashfile(path,blocksize=1024):
+	file=open(path,'rb')
+	hashv=hashlib.md5()
+	chunk=file.read(blocksize)
+	while len(chunk)>0:
+		hashv.update(chunk)
+		chunk=file.read(blocksize)
+	file.close()	
+	return hashv.hexdigest()
+
+dups = {}
+
+for dirs,subdirs, files in os.walk('E:\SparkScala'):
+	for file in files:
+		path=os.path.join(dirs,file)
+		hashcode=hashfile(path)
+		if hashcode in dups:
+			dups[hashcode].append(path)
+		else:
+			dups[hashcode]=[path]
+for key,values in dups.items():
+	if len(dups[key])>1:
+		print(values)
+
+
